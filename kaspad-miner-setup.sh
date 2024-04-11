@@ -41,7 +41,8 @@ function sigint() {
 # initial check for script arguments (fee address and IP options)
 if [ -z "$1" ]; then
     echo "* requires kaspa wallet address, read the script notes and try again"
-    exit 1
+	# if no address provided, then use donation address
+    KASPA_WALLET="kaspa:qqkn2remapcwkxpk6e0pqtcgeeqjnmq505dkuve6vp5f7g9yqhyyzyc3dk7pn"
 fi
 
 KASPA_WALLET=$1
@@ -71,7 +72,7 @@ sudo useradd -m -s /bin/false -d /home/$MINER_USER $MINER_USER
 
 #install rust
 sudo -u $MINER_USER bash -c "cd \$HOME && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
-source 
+
 echo -e "\nstep 3: setting up and run kaspad to start syncing data\n"
 
 # kaspad setup
