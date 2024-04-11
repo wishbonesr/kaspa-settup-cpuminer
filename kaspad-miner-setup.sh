@@ -71,7 +71,7 @@ sudo useradd -m -s /bin/false -d /home/$MINER_USER $MINER_USER
 
 #install rust
 sudo -u $MINER_USER bash -c "cd \$HOME && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
-
+source 
 echo -e "\nstep 3: setting up and run kaspad to start syncing data\n"
 
 # kaspad setup
@@ -85,6 +85,7 @@ sudo chown -R $MINER_USER:$MINER_USER $KASPAD_DIR
 cd $KASPAD_DIR
 # add GOBIN here to change the install location. https://stackoverflow.com/questions/27192909/go-install-directory-outside-of-gopath
 GOBIN=$KASPAD_DIR/build/bin
+sudo mkdir -p $GOBIN
 # build all projects in ./cmd/
 sudo -u $MINER_USER go install . $KASPAD_DIR/cmd/...
 
