@@ -1,0 +1,1 @@
+# kaspa-setup-cpuminer
