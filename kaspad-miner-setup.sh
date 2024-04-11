@@ -56,14 +56,14 @@ read -p "Press [Enter] to continiue"
 # keep track of directory where we run the script
 pushd $PWD &>/dev/null
 
-echo -e "\nStep1: Install requirements and setup golang\n"
+echo -e "\nStep 1: Install requirements and setup golang\n"
 
 sudo apt-get update
 sudo apt-get install -y $APT_PACKAGES
 sudo snap install --classic go
 echo "export PATH=$PATH:/snap/bin" >> ~/.bashrc
 
-echo -e "\nstep 2: adding miner user, install rust
+echo -e "\nstep 2: adding miner user, install rust"
 
 # add node account to run services
 sudo useradd -m -s /bin/false -d /home/$MINER_USER $MINER_USER
@@ -74,6 +74,7 @@ sudo -u $MINER_USER bash -c "cd \$HOME && curl --proto '=https' --tlsv1.2 -sSf h
 echo -e "\nstep 3: setting up and run kaspad to start syncing data\n"
 
 # kaspad setup
+cd /$HOME
 git clone $KASPAD_REPO
 sleep 0.5
 sudo mkdir -p $KASPAD_DIR
@@ -82,9 +83,9 @@ rm -rf $KASPAD_REPO_NAME
 sudo chown -R $MINER_USER:$MINER_USER $KASPAD_DIR
 cd $KASPAD_DIR
 # add GOBIN here to change the install location. https://stackoverflow.com/questions/27192909/go-install-directory-outside-of-gopath
-GOBIN="$KASPAD_DIR/build/bin
-build all projects in ./cmd/
-sudo -u $MINER_USER go install . ./cmd/...
+GOBIN=$KASPAD_DIR/build/bin
+# build all projects in ./cmd/
+sudo -u $MINER_USER go install . $KASPAD_DIR/cmd/...
 
 # add kaspad to path to call from service w/o full path...or not
 
@@ -127,7 +128,7 @@ CARGO_INSTALL_ROOT=$KASPA_MINER_DIR/.cargo/env
 mkdir -p $CARGO_INSTALL_ROOT
 sudo chown -R $MINER_USER:$MINER_USER $CARGO_INSTALL_ROOT
 export PATH=$PATH:$CARGO_INSTALL_ROOT
-cargo install kaspa-miner
+sudo -u $MINER_USER cargo install kaspa-miner
 
 #daemon configuration - miner
 sudo tee /etc/systemd/system/kaspa-miner.service > /dev/null <<EOT
