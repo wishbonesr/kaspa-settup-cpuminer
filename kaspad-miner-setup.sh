@@ -57,7 +57,8 @@ read -p "Press [Enter] to continiue"
 pushd $PWD &>/dev/null
 
 echo -e "\nStep 1: Install requirements and setup golang\n"
-
+# suppress service restart prompt from apt-get
+sudo NEEDRESTART_MODE=a apt-get dist-upgrade --yes
 sudo apt-get update
 sudo apt-get install -y $APT_PACKAGES
 sudo snap install --classic go
