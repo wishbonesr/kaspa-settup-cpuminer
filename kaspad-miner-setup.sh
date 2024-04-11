@@ -18,7 +18,7 @@
 #
 # general config
 MINER_USER="kminer"
-APT_PACKAGES="openssl curl wget snapd btop tmux git nano net-tools linux-kernel-headers build-essentials protobuf-compiler"
+APT_PACKAGES="openssl curl wget snapd btop tmux git nano net-tools linux-kernel-headers build-essential protobuf-compiler"
 
 # common admin change for commands that filter .folders
 shopt -s dotglob
